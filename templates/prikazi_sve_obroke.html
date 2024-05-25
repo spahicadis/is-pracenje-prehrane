@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pracenje-prehrane</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4fWbq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <style>
+        
+        * {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #007bff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            margin-top: 50px;
+            flex: 1;
+        }
+
+        table {
+            margin-top: 20px;
+            
+        }
+
+        thead {
+            background-color: #007bff;
+            color: white;
+        }
+
+        th {
+           padding: 10px;
+        }
+
+        table.table.table-striped {
+            border-spacing: 10px;
+        }
+
+        footer {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            text-decoration: none;
+            background-color: red;
+            padding: 5px;
+            transition: opacity 200ms;
+        }
+
+         #uredi {
+            background-color: blue;
+        }
+
+        .btn:hover {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">Praćenje prehrane</a>
+        <div class="nav-links">
+            <a class="nav-link" href="/">Naslovna</a>
+            <a class="nav-link" href="/dodaj_obrok">Dodaj Obrok</a>
+            <a class="nav-link" href="/prikazi_sve_obroke">Prikaži Sve Obroke</a>
+            <a class="nav-link" href="/vizualizacija">Vizualizacija</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="text-center">Prikaži Sve Obroke</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Naziv obroka</th>
+                    <th>Hrana</th>
+                    <th>Kalorije</th>
+                    <th>Proteini</th>
+                    <th>Ugljikohidrati</th>
+                    <th>Masti</th>
+                    <th>Stvoreno</th>
+                    <th>Zadnji update</th>
+                    <th>Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obrok in obroci %}
+                <tr>
+                    <td>{{ obrok.datum }}</td>
+                    <td>{{ obrok.naziv_obroka }}</td>
+                    <td>{{ obrok.hrana }}</td>
+                    <td>{{ obrok.kalorije }}</td>
+                    <td>{{ obrok.proteini }}</td>
+                    <td>{{ obrok.ugljikohidrati }}</td>
+                    <td>{{ obrok.masti }}</td>
+                    <td>{{ obrok.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ obrok.updated_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <a href="/uredi_obrok/{{ obrok.id }}" class="btn btn-sm btn-warning" id="uredi">Uredi</a>
+                        <form action="/obrisi_obrok/{{ obrok.id }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger">Obriši</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 pracenje-prehrane/is</p>
+    </footer>
+</body>
+
+</html>
