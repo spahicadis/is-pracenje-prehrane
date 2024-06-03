@@ -30,12 +30,12 @@ class Obrok(db.Entity):
 
 db.generate_mapping(create_tables=True)
 
-# Početna stranica
+
 @app.route('/')
 def index():
-    return render_template('index.html')  # Renderira početnu stranicu
+    return render_template('index.html')  
 
-# Dodavanje obroka
+
 @app.route('/dodaj_obrok', methods=['GET', 'POST'])
 @db_session
 def dodaj_obrok():
@@ -49,16 +49,16 @@ def dodaj_obrok():
         masti = float(request.form['masti'])
         Obrok(datum=datum, naziv_obroka=naziv_obroka, hrana=hrana, kalorije=kalorije, proteini=proteini, ugljikohidrati=ugljikohidrati, masti=masti)
         return redirect(url_for('index'))
-    return render_template('dodaj_obrok.html')  # Renderira stranicu za dodavanje obroka
+    return render_template('dodaj_obrok.html')  
 
-# Prikaz svih obroka
+
 @app.route('/prikazi_sve_obroke')
 @db_session
 def prikazi_sve_obroke():
     obroci = Obrok.select()
-    return render_template('prikazi_sve_obroke.html', obroci=obroci)  # Renderira stranicu za prikaz svih obroka
+    return render_template('prikazi_sve_obroke.html', obroci=obroci)  
 
-# Uređivanje obroka
+
 @app.route('/uredi_obrok/<int:obrok_id>', methods=['GET', 'POST'])
 @db_session
 def uredi_obrok(obrok_id):
@@ -73,9 +73,9 @@ def uredi_obrok(obrok_id):
         obrok.masti = float(request.form['masti'])
         obrok.updated_at = datetime.now()
         return redirect(url_for('prikazi_sve_obroke'))
-    return render_template('uredi_obrok.html', obrok=obrok)  # Renderira stranicu za uređivanje obroka
+    return render_template('uredi_obrok.html', obrok=obrok)  
 
-# Brisanje obroka
+
 @app.route('/obrisi_obrok/<int:obrok_id>', methods=['POST'])
 @db_session
 def obrisi_obrok(obrok_id):
@@ -83,7 +83,7 @@ def obrisi_obrok(obrok_id):
     obrok.delete()
     return redirect(url_for('prikazi_sve_obroke'))
 
-# Vizualizacija makronutrijenata
+
 @app.route('/vizualizacija')
 @db_session
 def vizualizacija():
@@ -98,8 +98,8 @@ def vizualizacija():
         'ugljikohidrati': ukupno_ugljikohidrati,
         'masti': ukupno_masti
     }
-    return render_template('vizualizacija.html', podaci=podaci)  # Renderira stranicu za vizualizaciju makronutrijenata
+    return render_template('vizualizacija.html', podaci=podaci) 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=8080)
 
