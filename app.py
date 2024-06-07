@@ -17,8 +17,8 @@ class Obrok(db.Entity):
     proteini = Required(float)
     ugljikohidrati = Required(float)
     masti = Required(float)
-    created_at = Required(datetime, default=datetime.now)
-    updated_at = Required(datetime, default=datetime.now)
+    created_at = Required(datetime, default=datetime.now())
+    updated_at = Required(datetime, default=datetime.now())
 
    
     def set_created_at(self):
